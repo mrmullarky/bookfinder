@@ -26,13 +26,18 @@ function searchBooks(){
     head3.innerHTML = "Date Published";
     heading.appendChild(head3);
 
+    const head4 = document.createElement("TH");
+    head4.innerHTML = "Link";
+    heading.appendChild(head4);
+
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}+inauthor:${query}`)
         .then(data => data.json())
         .then(data => {
             
             data.items.forEach((book) => {
-
+                
                 var row = heading.insertRow();
+
                 var cell1 = row.insertCell();
                 cell1.innerHTML = `${book.volumeInfo.title}`;
 
@@ -44,6 +49,9 @@ function searchBooks(){
                 if(date == "undefined") date = 'Unknown';
                 var cell3 = row.insertCell();
                 cell3.innerHTML = `${date}`;
+
+                var cell4 = row.insertCell();
+                cell4.innerHTML = `<a href="${book.volumeInfo.previewLink}">Link</a>`;
 
             });
         })
